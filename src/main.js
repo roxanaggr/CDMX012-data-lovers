@@ -13,7 +13,6 @@ const selectionOrder = document.getElementById('alpha');
 
 //Funcion para crear las tarjetas
 const cardsLegends = (champions) => {
-  console.log (champions)
   const championsCards = document.createElement('div');
   champions.forEach (champion => {
     const newCard = document.createElement('article');
