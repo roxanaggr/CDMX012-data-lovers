@@ -1,5 +1,5 @@
 //Traer los datos y funciones
-import {filterRole, orderAlpha, filterDifficulty} from './data.js';
+import {filterRole, orderAlpha, filterDifficulty, filterStats} from './data.js';
 import legends from './lol/lol.js';
 //sacar los objetos del arreglo
 const all = Object.values(legends.data)
@@ -8,9 +8,8 @@ const all = Object.values(legends.data)
 const showCards = document.getElementById('cardsChampions');
 const selectionRoles = document.getElementById('roles');
 const selectionOrder = document.getElementById('alpha');
-//const selectionDifficult = document.getElementById('difficulty');
+const selectionTop = document.getElementById('stats')
  
-
 //Funcion para crear las tarjetas
 const cardsLegends = (champions) => {
     const championsCards = document.createElement('div');
@@ -24,18 +23,15 @@ const cardsLegends = (champions) => {
       const newcardInfo = document.createElement('div');
       newcardName.textContent = champion.name
       newcardTitle.textContent = champion.title
-
       newcardName.className = "card-name";
       newcardTitle.className = "card-name";
       newcardInfo.className = "box-info"
-    
-    championsCards.appendChild(newCard);
-    newCard.appendChild(newcardBody);
-    newcardBody.appendChild(newcardImage);
-    newcardBody.appendChild(newcardName);
-    newcardBody.appendChild(newcardTitle);
-    newcardBody.appendChild(newcardInfo);
-
+      championsCards.appendChild(newCard);
+      newCard.appendChild(newcardBody);
+      newcardBody.appendChild(newcardImage);
+      newcardBody.appendChild(newcardName);
+      newcardBody.appendChild(newcardTitle);
+      newcardBody.appendChild(newcardInfo);
  });
  return championsCards
 }
@@ -45,7 +41,7 @@ showCards.appendChild(cardsLegends(all))
 selectionRoles.addEventListener('change', (e)=>{
     showCards.innerHTML = '';
     showCards.appendChild(cardsLegends(filterRole(all, e.target.value)))
-  });
+});
 
 //evento para el ordenado
 selectionOrder.addEventListener('change', (e)=>{
@@ -53,10 +49,16 @@ selectionOrder.addEventListener('change', (e)=>{
   showCards.appendChild(cardsLegends(orderAlpha(all, e.target.value)))
 });
 
-////////evento para el selector de dificultad que no funciona
+////////evento para el selector de dificultad
 document.getElementById('difficulty').addEventListener('change', (e) => {
   showCards.innerHTML = '';
   showCards.appendChild(cardsLegends(filterDifficulty(all, e.target.value)))
+});
+
+////////evento para el selector de top 5
+selectionTop.addEventListener('change', (e) => {
+  showCards.innerHTML = '';
+  showCards.appendChild(cardsLegends(filterStats(all, e.target.value)))
 });
 
 //crear un botón que nos retorne todas las tarjetas
